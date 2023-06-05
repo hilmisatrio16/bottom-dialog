@@ -1,16 +1,23 @@
 package com.example.latihanfp1
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
+import android.graphics.ColorSpace.Rgb
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +26,7 @@ import com.example.latihanfp1.databinding.ActivityMainBinding
 import com.example.latihanfp1.databinding.DateDialogLayoutBinding
 import com.example.latihanfp1.databinding.PassangerDialogLayoutBinding
 import com.example.latihanfp1.databinding.SearchDialogLayoutBinding
+import com.example.latihanfp1.databinding.SeatclassDialogLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -50,10 +58,75 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnKlik3.setOnClickListener {
             showDialogPassenger()
-//            Snackbar.make(binding.parenLayout,"Active", Snackbar.LENGTH_SHORT)
-//                .setTextColor(Color.WHITE)
-//                .setBackgroundTint(Color.BLUE)
-//                .show()
+        }
+
+        binding.btnKlik4.setOnClickListener {
+            showDialogClass()
+        }
+    }
+
+    private fun showDialogClass() {
+        val dialog = BottomSheetDialog(this)
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.seatclass_dialog_layout)
+        val bindingDialog = SeatclassDialogLayoutBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialog.root)
+        //
+        bindingDialog.btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialog.layoutEconomy.setOnClickListener {
+            setChoiceClass(0, bindingDialog)
+//            bindingDialog.layoutEconomy.setBackgroundColor(ContextCompat.getColor(this, R.color.primary_purple_5))
+//            bindingDialog.tvEconomy.setTextColor(Color.WHITE)
+//            bindingDialog.tvPriceEconomy.setTextColor(Color.WHITE)
+//            bindingDialog.icCeklisEconomy.visibility = View.VISIBLE
+        }
+
+        bindingDialog.layoutPremiumEconomy.setOnClickListener {
+            setChoiceClass(1, bindingDialog)
+        }
+        bindingDialog.layoutBusiness.setOnClickListener {
+            setChoiceClass(2, bindingDialog)
+        }
+        bindingDialog.layoutFirstClass.setOnClickListener {
+            setChoiceClass(3, bindingDialog)
+        }
+        dialog.show()
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation;
+        dialog.window?.setGravity(Gravity.BOTTOM);
+
+    }
+
+    private fun setChoiceClass(i: Int, bindingDialog : SeatclassDialogLayoutBinding) {
+        val listLayout : List<RelativeLayout> = listOf(
+            bindingDialog.layoutEconomy, bindingDialog.layoutPremiumEconomy, bindingDialog.layoutBusiness, bindingDialog.layoutFirstClass
+        )
+        val listTvClass : List<TextView> = listOf(
+            bindingDialog.tvEconomy, bindingDialog.tvPremiumEconomy, bindingDialog.tvBusiness, bindingDialog.tvFirstClass
+        )
+        val listTvPrice : List<TextView> = listOf(
+            bindingDialog.tvPriceEconomy, bindingDialog.tvPricePremiumEconomy, bindingDialog.tvPriceBusiness, bindingDialog.tvPriceFristClass
+        )
+        val listImgCeklis : List<ImageView> = listOf(
+            bindingDialog.icCeklisEconomy, bindingDialog.icCeklisPremiumEconomy, bindingDialog.icCeklisBusiness, bindingDialog.icCeklisFirstClass
+        )
+
+        for (index in listLayout.indices){
+            if(i == index){
+                listLayout[index].setBackgroundColor(ContextCompat.getColor(this, R.color.primary_purple_5))
+                listTvClass[index].setTextColor(Color.WHITE)
+                listTvPrice[index].setTextColor(Color.WHITE)
+                listImgCeklis[index].visibility = View.VISIBLE
+            }else{
+                listLayout[index].setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                listTvClass[index].setTextColor(Color.BLACK)
+                listTvPrice[index].setTextColor(ContextCompat.getColor(this, R.color.primary_purple_4))
+                listImgCeklis[index].visibility = View.GONE
+            }
         }
     }
 
@@ -70,6 +143,7 @@ class MainActivity : AppCompatActivity() {
         bindingDialog.btnClose.setOnClickListener {
             dialog.dismiss()
         }
+
 
         bindingDialog.btnSaveSeatPassenger.setOnClickListener {
 //            Snackbar.make(bindingDialog.passLayout,"Active", Snackbar.LENGTH_SHORT)
