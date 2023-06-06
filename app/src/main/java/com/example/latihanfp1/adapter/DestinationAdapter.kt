@@ -1,9 +1,10 @@
-package com.example.latihanfp1
+package com.example.latihanfp1.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.latihanfp1.model.ResponseDataCity
 import com.example.latihanfp1.databinding.ItemDestinationBinding
 
 class DestinationAdapter(private var list : List<ResponseDataCity>) : RecyclerView.Adapter<DestinationAdapter.ViewHolder>() {

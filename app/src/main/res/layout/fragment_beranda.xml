@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BerandaFragment">
+    tools:context=".fragment.BerandaFragment">
 <!--add scrollview-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topLayout"
@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="12dp"
         android:background="@drawable/background_beranda"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <TextView
             android:id="@+id/Title"
@@ -50,7 +52,7 @@
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/background_border_destination_beranda">
                     <LinearLayout
-                        android:id="@+id/layoutDeparture"
+                        android:id="@+id/setDeparture"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -67,14 +69,23 @@
                             android:layout_marginLeft="12dp"
                             android:textSize="12sp"
                             android:textColor="#8A8A8A"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Jakarta (JKTA)"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:lineHeight="24dp"
-                            android:layout_marginStart="20dp"/>
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="54dp">
+
+                            <TextView
+                                android:id="@+id/tvDeparture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="20dp"
+                                android:lineHeight="24dp"
+                                android:text="Jakarta (JKTA)"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
                     </LinearLayout>
                     <View
                         android:id="@+id/gridTop1"
@@ -85,9 +96,9 @@
                         android:layout_marginStart="32dp"
                         android:layout_marginEnd="32dp"
                         android:background="#D0D0D0"
-                        android:layout_below="@id/layoutDeparture"/>
+                        android:layout_below="@id/setDeparture"/>
                     <LinearLayout
-                        android:id="@+id/layoutArrival"
+                        android:id="@+id/setArrival"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -105,18 +116,27 @@
                             android:layout_marginLeft="12dp"
                             android:textSize="12sp"
                             android:textColor="#8A8A8A"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Melbourne (MLB)"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:lineHeight="24dp"
-                            android:gravity="center"
-                            android:layout_marginStart="20dp"/>
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="54dp">
+
+                            <TextView
+                                android:id="@+id/tvArrival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:lineHeight="24dp"
+                                android:text="Melbourne (MLB)"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <ImageButton
+                        android:id="@+id/btnChange"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -142,9 +162,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"/>
                     <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/optionFlight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
+                        android:checked="false"
                         app:trackTint="#4B1979"
                         app:thumbTint="#FFFFFF"
                         android:layout_alignParentEnd="true"
@@ -159,7 +180,7 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="12dp">
                     <RelativeLayout
-                        android:id="@+id/LayoutdateDeparture"
+                        android:id="@+id/setDateDeparture"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -199,11 +220,12 @@
                     </RelativeLayout>
                     <!--           pick tanggal kembali-->
                     <RelativeLayout
-                        android:id="@+id/layoutDateReturn"
+                        android:id="@+id/setDateReturn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:visibility="gone">
                         <ImageView
                             android:id="@+id/imgDateReturn"
                             android:layout_width="wrap_content"
@@ -248,7 +270,7 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="16dp">
                     <RelativeLayout
-                        android:id="@+id/LayoutPassangers"
+                        android:id="@+id/setPassangers"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -273,6 +295,7 @@
                                 android:textColor="#8A8A8A"/>
                             <!--                   tanggal menggunakan poppins medium-->
                             <TextView
+                                android:id="@+id/tvPassengers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2 Penumpang"
@@ -288,7 +311,7 @@
                     </RelativeLayout>
                     <!--           pick seat class-->
                     <RelativeLayout
-                        android:id="@+id/layoutSeatClass"
+                        android:id="@+id/setSeatClass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -314,6 +337,7 @@
                                 android:textColor="#8A8A8A"/>
                             <!--                   tanggal menggunakan poppins medium-->
                             <TextView
+                                android:id="@+id/tvSeatClass"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Business"
@@ -362,6 +386,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topLayout"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavoriteDestination"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

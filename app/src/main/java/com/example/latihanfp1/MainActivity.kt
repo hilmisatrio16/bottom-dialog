@@ -1,9 +1,7 @@
 package com.example.latihanfp1
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
-import android.graphics.ColorSpace.Rgb
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,22 +12,21 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.latihanfp1.adapter.DestinationAdapter
 import com.example.latihanfp1.databinding.ActivityMainBinding
 import com.example.latihanfp1.databinding.DateDialogLayoutBinding
 import com.example.latihanfp1.databinding.PassangerDialogLayoutBinding
 import com.example.latihanfp1.databinding.SearchDialogLayoutBinding
 import com.example.latihanfp1.databinding.SeatclassDialogLayoutBinding
+import com.example.latihanfp1.model.ResponseDataCity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
