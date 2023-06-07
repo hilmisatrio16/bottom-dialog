@@ -60,4 +60,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
+
+    //calendarView
+    implementation 'com.squareup:android-times-square:1.7.0'
 }

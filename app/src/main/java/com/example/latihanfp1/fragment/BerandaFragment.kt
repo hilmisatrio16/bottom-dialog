@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +27,10 @@ import com.example.latihanfp1.databinding.SeatclassDialogLayoutBinding
 import com.example.latihanfp1.model.DataDestinationFavorite
 import com.example.latihanfp1.model.ResponseDataCity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.squareup.timessquare.CalendarPickerView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BerandaFragment : Fragment() {
 
@@ -62,7 +65,7 @@ class BerandaFragment : Fragment() {
         }
 
         binding.btnChange.setOnClickListener {
-            val animBtn = AnimationUtils.loadAnimation(context, R.anim.anim_imgbutton_change)
+            val animBtn = AnimationUtils.loadAnimation(context, R.anim.anim_rotate)
             binding.btnChange.startAnimation(animBtn)
             setChangePosition()
         }
@@ -84,12 +87,16 @@ class BerandaFragment : Fragment() {
         }
 
         binding.setDateDeparture.setOnClickListener {
-            setDateFlight()
+            setDateFlight(binding.optionFlight.isChecked)
+        }
+
+        binding.setDateReturn.setOnClickListener {
+            setDateFlight(binding.optionFlight.isChecked)
         }
 
     }
 
-    private fun setDateFlight() {
+    private fun setDateFlight(checked : Boolean) {
         //nanti dikasih kondisi apakah tanggal pulang pergi atau single flight
         val dialog = BottomSheetDialog(requireContext())
 
@@ -98,9 +105,15 @@ class BerandaFragment : Fragment() {
         val bindingDialog = DateDialogLayoutBinding.inflate(layoutInflater)
         dialog.setContentView(bindingDialog.root)
 
-        var seatClass = "Economy"
-        //
+        dateFlight(bindingDialog, checked)
+
         bindingDialog.btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialog.btnSaveDate.setOnClickListener {
+            binding.tvDateDeparture.text = bindingDialog.tvDepartureDate.text
+            binding.tvDateReturn.text = bindingDialog.tvReturnDate.text
+            binding.tvDateReturn.setTextColor(Color.BLACK)
             dialog.dismiss()
         }
         dialog.show()
@@ -108,6 +121,51 @@ class BerandaFragment : Fragment() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation;
         dialog.window?.setGravity(Gravity.BOTTOM);
+    }
+
+    private fun dateFlight(bindingDialog: DateDialogLayoutBinding, checked: Boolean) {
+        val startDate = Date()
+        val endDate = Date()
+        val nextYear = Calendar.getInstance()
+        nextYear.add(Calendar.YEAR, 1)
+
+        if(checked){
+            bindingDialog.dateFlight.init(startDate,nextYear.time)
+                .inMode(CalendarPickerView.SelectionMode.RANGE)
+                .withSelectedDate(startDate)
+        }else{
+            bindingDialog.layoutDateReturn.visibility = View.GONE
+            bindingDialog.dateFlight.init(startDate,nextYear.time)
+                .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                .withSelectedDate(startDate)
+        }
+
+        bindingDialog.dateFlight.setOnDateSelectedListener(object : CalendarPickerView.OnDateSelectedListener {
+            override fun onDateSelected(date: Date) {
+                val selectedDates = bindingDialog.dateFlight.selectedDates
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                if (selectedDates.size >= 2) {
+                    val dateDeparture = selectedDates[0]
+                    val dateReturn = selectedDates[selectedDates.size - 1]
+                    bindingDialog.tvDepartureDate.text = convertDateFormatID(dateFormat.format(dateDeparture).toString())
+                    bindingDialog.tvReturnDate.text = convertDateFormatID(dateFormat.format(dateReturn).toString())
+                }else{
+
+                    bindingDialog.tvDepartureDate.text = convertDateFormatID(dateFormat.format(date).toString())
+                }
+            }
+
+            override fun onDateUnselected(date: Date) {
+                // Tindakan saat tanggal yang dipilih dibatalkan (tidak digunakan dalam mode selection range)
+            }
+        })
+
+    }
+    fun convertDateFormatID(dateString: String): String {
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formatDateID = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+        val date: Date = inputFormat.parse(dateString) as Date
+        return formatDateID.format(date)
     }
 
     private fun setSeatClassPassengers() {

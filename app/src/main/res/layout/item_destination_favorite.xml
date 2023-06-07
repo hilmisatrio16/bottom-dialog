@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:orientation="vertical"
-                android:background="@drawable/background_label_destination_favorite">
+                android:background="@drawable/background_label">
                 <TextView
                     android:id="@+id/tvLabelDestination"
                     android:layout_width="wrap_content"
